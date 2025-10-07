@@ -38,9 +38,16 @@ repository:
           - include: '#line-continuation'
           - include: '#action-string'
 
+      # SecRuleRemoveById, SecRuleUpdateActionById, etc. with numeric ID
+      - name: meta.secrule-id-directive.secrules
+        match: \b(SecRuleRemoveById|SecRuleUpdateActionById|SecRuleUpdateTargetById)\s+(\d+)
+        captures:
+          '1': {name: keyword.control.directive.secrules}
+          '2': {name: constant.numeric.secrules}
+
       # Other Sec directives
       - name: keyword.control.directive.secrules
-        match: \b(SecMarker|SecDefaultAction|SecRuleRemoveById|SecRuleRemoveByMsg|SecRuleRemoveByTag|SecRuleUpdateActionById|SecRuleUpdateTargetById|SecRuleUpdateTargetByMsg|SecRuleUpdateTargetByTag|SecRuleScript|SecComponentSignature|SecArgumentSeparator|SecArgumentsLimit|SecAuditEngine|SecAuditLog|SecAuditLog2|SecAuditLogDirMode|SecAuditLogFileMode|SecAuditLogFormat|SecAuditLogParts|SecAuditLogRelevantStatus|SecAuditLogStorageDir|SecAuditLogType|SecAuditLogPrefix|SecDebugLog|SecDebugLogLevel|SecGeoLookupDb|SecHttpBlKey|SecParseXmlIntoArgs|SecPcreMatchLimit|SecRemoteRules|SecRemoteRulesFailAction|SecRequestBodyAccess|SecRequestBodyJsonDepthLimit|SecRequestBodyLimit|SecRequestBodyNoFilesLimit|SecRequestBodyLimitAction|SecResponseBodyLimit|SecResponseBodyLimitAction|SecResponseBodyMimeType|SecResponseBodyMimeTypesClear|SecResponseBodyAccess|SecRuleEngine|SecStatusEngine|SecTmpDir|SecTmpSaveUploadedFiles|SecUnicodeMapFile|SecUploadDir|SecUploadFileLimit|SecUploadFileMode|SecUploadKeepFiles|SecWebAppId|SecXmlExternalEntity)\b
+        match: \b(SecMarker|SecDefaultAction|SecRuleRemoveByMsg|SecRuleRemoveByTag|SecRuleUpdateTargetByMsg|SecRuleUpdateTargetByTag|SecRuleScript|SecComponentSignature|SecArgumentSeparator|SecArgumentsLimit|SecAuditEngine|SecAuditLog|SecAuditLog2|SecAuditLogDirMode|SecAuditLogFileMode|SecAuditLogFormat|SecAuditLogParts|SecAuditLogRelevantStatus|SecAuditLogStorageDir|SecAuditLogType|SecAuditLogPrefix|SecDebugLog|SecDebugLogLevel|SecGeoLookupDb|SecHttpBlKey|SecParseXmlIntoArgs|SecPcreMatchLimit|SecRemoteRules|SecRemoteRulesFailAction|SecRequestBodyAccess|SecRequestBodyJsonDepthLimit|SecRequestBodyLimit|SecRequestBodyNoFilesLimit|SecRequestBodyLimitAction|SecResponseBodyLimit|SecResponseBodyLimitAction|SecResponseBodyMimeType|SecResponseBodyMimeTypesClear|SecResponseBodyAccess|SecRuleEngine|SecStatusEngine|SecTmpDir|SecTmpSaveUploadedFiles|SecUnicodeMapFile|SecUploadDir|SecUploadFileLimit|SecUploadFileMode|SecUploadKeepFiles|SecWebAppId|SecXmlExternalEntity)\b
 
   line-continuation:
     patterns:
