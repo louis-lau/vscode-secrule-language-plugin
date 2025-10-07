@@ -222,8 +222,6 @@ actions:
   log:
     description: Logs this rule match to the error and audit logs.
     group: Non-disruptive
-    syntax: log
-    example: log
     whenToUse: Recording rule matches for monitoring and analysis. Combine with pass for non-blocking logging.
     relatedActions:
       - nolog
@@ -232,8 +230,6 @@ actions:
   nolog:
     description: Prevents rule matches from appearing in the error and audit logs.
     group: Non-disruptive
-    syntax: nolog
-    example: nolog
     whenToUse: >-
       For rules that perform flow control or set variables without indicating an attack (e.g., whitelisting rules with
       pass).
@@ -256,8 +252,6 @@ actions:
   allow:
     description: Stops rule processing and allows the transaction to proceed (whitelist action).
     group: Disruptive
-    syntax: allow
-    example: allow
     whenToUse: Bypasses all remaining rules in the current phase and all subsequent phases. Use for trusted content.
     relatedActions:
       - deny
@@ -268,8 +262,6 @@ actions:
   block:
     description: Performs the disruptive action defined by SecDefaultAction.
     group: Disruptive
-    syntax: block
-    example: block
     whenToUse: >-
       More flexible than deny - allows you to change the blocking behavior globally via SecDefaultAction instead of
       editing each rule.
@@ -282,8 +274,6 @@ actions:
   pass:
     description: Continues processing with the next rule even when this rule matches (non-blocking).
     group: Disruptive
-    syntax: pass
-    example: pass
     whenToUse: >-
       When you want to log, set variables, whitelist parameters (ctl:ruleRemoveTargetById), or perform other setup
       actions without blocking the request.
@@ -296,8 +286,6 @@ actions:
   drop:
     description: In ModSecurity v3, this currently functions the same as deny.
     group: Disruptive
-    syntax: drop
-    example: drop
     whenToUse: Behavior differs from v2 where it would drop the TCP connection.
     relatedActions:
       - deny
@@ -334,8 +322,6 @@ actions:
       Chains the current rule with the rule that immediately follows it. All rules in a chain must match for the
       disruptive action to trigger.
     group: Non-disruptive
-    syntax: chain
-    example: chain
     whenToUse: >-
       When you need multiple conditions to all be true (logical AND), like checking both request method AND a specific
       parameter value.
@@ -427,16 +413,12 @@ actions:
       Copies captured substrings from the regular expression to the transaction collection. Captured data is available
       in TX.0-TX.9 variables.
     group: Non-disruptive
-    syntax: capture
-    example: capture
     whenToUse: >-
       When you need to extract and use parts of a matched pattern in later rules or logging (e.g., extract a session ID
       from a malicious request).
   multiMatch:
     description: Forces the rule to match on all occurrences of a variable, not just the first.
     group: Non-disruptive
-    syntax: multiMatch
-    example: multiMatch
     whenToUse: >-
       Thorough inspection of all instances when dealing with collections like ARGS (e.g., check all parameters, not just
       the first match).
@@ -453,16 +435,12 @@ actions:
       Marks the transaction to be logged to the audit log. Transaction will be logged regardless of audit engine
       settings.
     group: Non-disruptive
-    syntax: auditlog
-    example: auditlog
     whenToUse: >-
       Forcing specific transactions to be logged even when SecAuditEngine is Off or RelevantOnly (e.g., always log admin
       panel access).
   noauditlog:
     description: Prevents the transaction from being logged to the audit log.
     group: Non-disruptive
-    syntax: noauditlog
-    example: noauditlog
     whenToUse: Reducing audit log noise for benign detections or high-volume endpoints (e.g., health checks, monitoring probes).
 operators:
   rx:
