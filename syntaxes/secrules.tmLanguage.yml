@@ -66,7 +66,7 @@ repository:
 
       # Variable with collection parameter ARGS:param
       - name: meta.variable.collection.secrules
-        match: \b([A-Z_]+:)([a-zA-Z0-9_\-\.\[\]]+)
+        match: \b([A-Z_]+:)([a-zA-Z0-9_\-\.\/\[\]]+)
         captures:
           '1': {name: variable.language.secrules}
           '2': {name: string.unquoted.secrules}
@@ -165,16 +165,25 @@ repository:
           '1': {name: keyword.other.status.secrules}
           '2': {name: constant.numeric.secrules}
 
-      # severity:level
+      # severity:'LEVEL' with quotes
       - name: meta.severity.secrules
-        match: (severity:)(['"]?\d+['"]?|EMERGENCY|ALERT|CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG)\b
+        match: (severity:)(['"])([^'"]+)(['"])
+        captures:
+          '1': {name: keyword.other.severity.secrules}
+          '2': {name: string.quoted.secrules}
+          '3': {name: string.quoted.secrules}
+          '4': {name: string.quoted.secrules}
+      
+      # severity:LEVEL without quotes
+      - name: meta.severity.secrules
+        match: (severity:)(\d+|EMERGENCY|ALERT|CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG)\b
         captures:
           '1': {name: keyword.other.severity.secrules}
           '2': {name: constant.language.secrules}
 
       # ctl:ruleRemoveTargetById=number;ARGS:param
       - name: meta.ctl.ruleRemoveTargetById.secrules
-        match: (ctl:)(ruleRemoveTargetById|ruleRemoveTargetByMsg)(=)(\d+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\[\]]+)
+        match: (ctl:)(ruleRemoveTargetById|ruleRemoveTargetByMsg)(=)(\d+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\/\[\]]+)
         captures:
           '1': {name: keyword.control.ctl.secrules}
           '2': {name: support.function.ctl.secrules}
@@ -198,7 +207,7 @@ repository:
 
       # ctl:ruleRemoveTargetByTag=TAG_NAME;ARGS:param
       - name: meta.ctl.ruleRemoveTargetByTag.secrules
-        match: (ctl:)(ruleRemoveTargetByTag)(=)([a-zA-Z0-9_\/\-]+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\[\]]+)
+        match: (ctl:)(ruleRemoveTargetByTag)(=)([a-zA-Z0-9_\/\-]+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\/\[\]]+)
         captures:
           '1': {name: keyword.control.ctl.secrules}
           '2': {name: support.function.ctl.secrules}
@@ -229,25 +238,59 @@ repository:
           '3': {name: keyword.operator.assignment.secrules}
           '4': {name: string.unquoted.secrules}
 
-      # msg:text with variable support
+      # msg:'text' or msg:"text"
       - name: meta.msg.secrules
-        match: (msg:)(['"]?)
+        match: (msg:)(['"])([^'"]+)(['"])
         captures:
           '1': {name: keyword.other.msg.secrules}
-          '2': {name: string.quoted.double.secrules}
+          '2': {name: string.quoted.secrules}
+          '3': 
+            patterns:
+              - include: '#variables'
+              - name: string.quoted.secrules
+                match: .+
+          '4': {name: string.quoted.secrules}
 
-      # logdata, tag, ver, rev, maturity, accuracy
+      # logdata, tag, ver, rev, maturity, accuracy with quoted strings
       - name: meta.metadata.secrules
-        match: ((?:logdata|tag|ver|rev|maturity|accuracy):)([^,"]+)
+        match: ((?:logdata|tag|ver|rev|maturity|accuracy):)(['"])([^'"]+)(['"])
+        captures:
+          '1': {name: keyword.other.metadata.secrules}
+          '2': {name: string.quoted.secrules}
+          '3': 
+            patterns:
+              - include: '#variables'
+              - name: string.quoted.secrules
+                match: .+
+          '4': {name: string.quoted.secrules}
+      
+      # logdata, tag, ver, rev, maturity, accuracy without quotes
+      - name: meta.metadata.secrules
+        match: ((?:logdata|tag|ver|rev|maturity|accuracy):)([^,"']+)
         captures:
           '1': {name: keyword.other.metadata.secrules}
           '2': 
             patterns:
               - include: '#variables'
 
-      # setvar:variable=value
+      # setvar:'variable=value' with quotes
       - name: meta.setvar.secrules
-        match: ((?:setvar|setenv|expirevar):)([^,"]+)
+        match: ((?:setvar|setenv|expirevar):)(['"])([^'"]+)(['"])
+        captures:
+          '1': {name: keyword.control.setvar.secrules}
+          '2': {name: string.quoted.secrules}
+          '3':
+            patterns:
+              - include: '#variables'
+              - match: '='
+                name: keyword.operator.assignment.secrules
+              - name: string.quoted.secrules
+                match: .+
+          '4': {name: string.quoted.secrules}
+      
+      # setvar:variable=value without quotes
+      - name: meta.setvar.secrules
+        match: ((?:setvar|setenv|expirevar):)([^,"']+)
         captures:
           '1': {name: keyword.control.setvar.secrules}
           '2':
