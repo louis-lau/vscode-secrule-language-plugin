@@ -1,14 +1,5 @@
 import * as vscode from 'vscode'
-import { documentation } from './documentation'
-
-interface DocEntry {
-	description: string
-	syntax?: string
-	example?: string
-	note?: string
-	group?: string
-	relatedActions?: string[]
-}
+import { documentation, DocEntry } from './documentation'
 
 /**
  * Creates a formatted hover markdown for documentation
@@ -36,8 +27,8 @@ function createHoverMarkdown(
 	markdown.appendMarkdown(`${description}\n\n`)
 
 	// When to use note
-	if (docEntry.note) {
-		markdown.appendMarkdown(`**When to use:**\n\n${docEntry.note}\n\n`)
+	if (docEntry.whenToUse) {
+		markdown.appendMarkdown(`**When to use:**\n\n${docEntry.whenToUse}\n\n`)
 	}
 
 	// Related actions
@@ -56,6 +47,12 @@ function createHoverMarkdown(
 		markdown.appendMarkdown(`**Example:**\n`)
 		markdown.appendCodeblock(docEntry.example, 'secrules')
 	}
+
+	// Documentation link
+	// ctl: actions all share the same #ctl anchor, others use their name as anchor
+	const anchor = title.startsWith('ctl:') ? 'ctl' : title.replace(/^@/, '')
+	const wikiUrl = `https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v3.x)#user-content-${anchor}`
+	markdown.appendMarkdown(`\n[View full documentation](${wikiUrl})`)
 
 	markdown.isTrusted = true
 	return markdown
