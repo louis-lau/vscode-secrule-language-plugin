@@ -1,0 +1,28 @@
+{
+  "name": "secrules-syntax",
+  "displayName": "SecRules Syntax Highlighting",
+  "description": "Provides syntax highlighting for ModSecurity SecRules.",
+  "version": "0.1.0",
+  "publisher": "Louis",
+  "engines": {
+    "vscode": "^1.50.0"
+  },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "secrules",
+        "aliases": ["SecRules", "secrules"],
+        "extensions": [".secrules", ".conf"],
+        "configuration": "./languages/secrules.configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "secrules",
+        "scopeName": "source.secrules",
+        "path": "./syntaxes/secrules.tmLanguage.json"
+      }
+    ]
+  }
+}
