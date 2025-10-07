@@ -7,13 +7,21 @@
   "engines": {
     "vscode": "^1.50.0"
   },
-  "categories": ["Programming Languages"],
+  "categories": [
+    "Programming Languages"
+  ],
   "contributes": {
     "languages": [
       {
         "id": "secrules",
-        "aliases": ["SecRules", "secrules"],
-        "extensions": [".secrules", ".conf"],
+        "aliases": [
+          "SecRules",
+          "secrules"
+        ],
+        "extensions": [
+          ".secrules",
+          ".conf"
+        ],
         "configuration": "./languages/secrules.configuration.json"
       }
     ],
@@ -24,5 +32,8 @@
         "path": "./syntaxes/secrules.tmLanguage.json"
       }
     ]
+  },
+  "devDependencies": {
+    "vscode-tmgrammar-test": "^0.1.3"
   }
 }
