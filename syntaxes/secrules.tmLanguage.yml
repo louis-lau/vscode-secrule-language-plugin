@@ -177,6 +177,17 @@ repository:
           '6': {name: variable.language.secrules}
           '7': {name: variable.language.secrules}
           '8': {name: string.unquoted.secrules}
+      
+      # ctl:ruleRemoveTargetById=number;VARIABLE (without :param)
+      - name: meta.ctl.ruleRemoveTargetById.secrules
+        match: (ctl:)(ruleRemoveTargetById|ruleRemoveTargetByMsg)(=)(\d+)(;)([A-Z_]+)\b
+        captures:
+          '1': {name: keyword.control.ctl.secrules}
+          '2': {name: support.function.ctl.secrules}
+          '3': {name: keyword.operator.assignment.secrules}
+          '4': {name: constant.numeric.secrules}
+          '5': {name: punctuation.separator.semicolon.secrules}
+          '6': {name: variable.language.secrules}
 
       # ctl:ruleRemoveTargetByTag=TAG_NAME;ARGS:param
       - name: meta.ctl.ruleRemoveTargetByTag.secrules
@@ -190,6 +201,17 @@ repository:
           '6': {name: variable.language.secrules}
           '7': {name: variable.language.secrules}
           '8': {name: string.unquoted.secrules}
+      
+      # ctl:ruleRemoveTargetByTag=TAG_NAME;VARIABLE (without :param)
+      - name: meta.ctl.ruleRemoveTargetByTag.secrules
+        match: (ctl:)(ruleRemoveTargetByTag)(=)([a-zA-Z0-9_\/\-]+)(;)([A-Z_]+)\b
+        captures:
+          '1': {name: keyword.control.ctl.secrules}
+          '2': {name: support.function.ctl.secrules}
+          '3': {name: keyword.operator.assignment.secrules}
+          '4': {name: string.unquoted.tag.secrules}
+          '5': {name: punctuation.separator.semicolon.secrules}
+          '6': {name: variable.language.secrules}
 
       # Generic ctl:action
       - name: meta.ctl.secrules
