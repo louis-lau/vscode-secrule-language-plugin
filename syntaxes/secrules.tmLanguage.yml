@@ -59,19 +59,17 @@ repository:
 
       # Variable with collection parameter ARGS:param
       - name: meta.variable.collection.secrules
-        match: \b([A-Z_]+)([:])([a-zA-Z0-9_\-\.\[\]]+)
+        match: \b([A-Z_]+:)([a-zA-Z0-9_\-\.\[\]]+)
         captures:
           '1': {name: variable.language.secrules}
-          '2': {name: punctuation.accessor.secrules}
-          '3': {name: string.unquoted.secrules}
+          '2': {name: string.unquoted.secrules}
 
       # Variable with regex /pattern/
       - name: meta.variable.regex.secrules
-        match: \b([A-Z_]+)(:)(/[^/\s]+/)
+        match: \b([A-Z_]+:)(/[^/\s]+/)
         captures:
           '1': {name: variable.language.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: string.regexp.secrules}
+          '2': {name: string.regexp.secrules}
 
       # Variable count operator &
       - name: keyword.operator.count.secrules
@@ -134,107 +132,96 @@ repository:
     patterns:
       # Transformation t:function
       - name: meta.transformation.secrules
-        match: (t)(:)(none|base64Decode|base64DecodeExt|base64Encode|cmdLine|compressWhitespace|cssDecode|escapeSeqDecode|hexDecode|hexEncode|htmlEntityDecode|jsDecode|length|lowercase|md5|normalisePath|normalizePath|normalisePathWin|normalizePathWin|parityEven7bit|parityOdd7bit|parityZero7bit|removeNulls|removeWhitespace|replaceComments|removeCommentsChar|removeComments|replaceNulls|sqlHexDecode|urlDecode|uppercase|urlDecodeUni|urlEncode|utf8toUnicode|sha1|trimLeft|trimRight|trim)\b
+        match: (t:)(none|base64Decode|base64DecodeExt|base64Encode|cmdLine|compressWhitespace|cssDecode|escapeSeqDecode|hexDecode|hexEncode|htmlEntityDecode|jsDecode|length|lowercase|md5|normalisePath|normalizePath|normalisePathWin|normalizePathWin|parityEven7bit|parityOdd7bit|parityZero7bit|removeNulls|removeWhitespace|replaceComments|removeCommentsChar|removeComments|replaceNulls|sqlHexDecode|urlDecode|uppercase|urlDecodeUni|urlEncode|utf8toUnicode|sha1|trimLeft|trimRight|trim)\b
         captures:
           '1': {name: keyword.other.transformation.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: string.unquoted.secrules}
+          '2': {name: string.unquoted.secrules}
 
       # phase:N
       - name: meta.phase.secrules
-        match: (phase)(:)(\d+|request|response|logging)\b
+        match: (phase:)(\d+|request|response|logging)\b
         captures:
           '1': {name: keyword.other.phase.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: constant.numeric.secrules}
+          '2': {name: constant.numeric.secrules}
 
       # id:number
       - name: meta.id.secrules
-        match: (id)(:)(\d+)\b
+        match: (id:)(\d+)\b
         captures:
           '1': {name: keyword.other.id.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: constant.numeric.id.secrules}
+          '2': {name: constant.numeric.id.secrules}
 
       # status:number
       - name: meta.status.secrules
-        match: (status)(:)(\d+)\b
+        match: (status:)(\d+)\b
         captures:
           '1': {name: keyword.other.status.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: constant.numeric.secrules}
+          '2': {name: constant.numeric.secrules}
 
       # severity:level
       - name: meta.severity.secrules
-        match: (severity)([:])(['"]?\d+['"]?|EMERGENCY|ALERT|CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG)\b
+        match: (severity:)(['"]?\d+['"]?|EMERGENCY|ALERT|CRITICAL|ERROR|WARNING|NOTICE|INFO|DEBUG)\b
         captures:
           '1': {name: keyword.other.severity.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: constant.language.secrules}
+          '2': {name: constant.language.secrules}
 
       # ctl:ruleRemoveTargetById=number;ARGS:param
       - name: meta.ctl.ruleRemoveTargetById.secrules
-        match: (ctl)(:)(ruleRemoveTargetById|ruleRemoveTargetByMsg)(=)(\d+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\[\]]+)
+        match: (ctl:)(ruleRemoveTargetById|ruleRemoveTargetByMsg)(=)(\d+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\[\]]+)
         captures:
           '1': {name: keyword.control.ctl.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: support.function.ctl.secrules}
-          '4': {name: keyword.operator.assignment.secrules}
-          '5': {name: constant.numeric.secrules}
-          '6': {name: punctuation.separator.semicolon.secrules}
+          '2': {name: support.function.ctl.secrules}
+          '3': {name: keyword.operator.assignment.secrules}
+          '4': {name: constant.numeric.secrules}
+          '5': {name: punctuation.separator.semicolon.secrules}
+          '6': {name: variable.language.secrules}
           '7': {name: variable.language.secrules}
-          '8': {name: punctuation.accessor.secrules}
-          '9': {name: string.unquoted.secrules}
+          '8': {name: string.unquoted.secrules}
 
       # ctl:ruleRemoveTargetByTag=TAG_NAME;ARGS:param
       - name: meta.ctl.ruleRemoveTargetByTag.secrules
-        match: (ctl)(:)(ruleRemoveTargetByTag)(=)([a-zA-Z0-9_\/\-]+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\[\]]+)
+        match: (ctl:)(ruleRemoveTargetByTag)(=)([a-zA-Z0-9_\/\-]+)(;)([A-Z_]+)(:)([a-zA-Z0-9_\-\.\[\]]+)
         captures:
           '1': {name: keyword.control.ctl.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: support.function.ctl.secrules}
-          '4': {name: keyword.operator.assignment.secrules}
-          '5': {name: string.unquoted.tag.secrules}
-          '6': {name: punctuation.separator.semicolon.secrules}
+          '2': {name: support.function.ctl.secrules}
+          '3': {name: keyword.operator.assignment.secrules}
+          '4': {name: string.unquoted.tag.secrules}
+          '5': {name: punctuation.separator.semicolon.secrules}
+          '6': {name: variable.language.secrules}
           '7': {name: variable.language.secrules}
-          '8': {name: punctuation.accessor.secrules}
-          '9': {name: string.unquoted.secrules}
+          '8': {name: string.unquoted.secrules}
 
       # Generic ctl:action
       - name: meta.ctl.secrules
-        match: (ctl)(:)([a-zA-Z_]+)(=?)([^,"]*)
+        match: (ctl:)([a-zA-Z_]+)(=?)([^,"]*)
         captures:
           '1': {name: keyword.control.ctl.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: support.function.ctl.secrules}
-          '4': {name: keyword.operator.assignment.secrules}
-          '5': {name: string.unquoted.secrules}
+          '2': {name: support.function.ctl.secrules}
+          '3': {name: keyword.operator.assignment.secrules}
+          '4': {name: string.unquoted.secrules}
 
       # msg:text with variable support
       - name: meta.msg.secrules
-        match: (msg)(:)(['"]?)
+        match: (msg:)(['"]?)
         captures:
           '1': {name: keyword.other.msg.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: string.quoted.double.secrules}
+          '2': {name: string.quoted.double.secrules}
 
       # logdata, tag, ver, rev, maturity, accuracy
       - name: meta.metadata.secrules
-        match: (logdata|tag|ver|rev|maturity|accuracy)(:)([^,"]+)
+        match: ((?:logdata|tag|ver|rev|maturity|accuracy):)([^,"]+)
         captures:
           '1': {name: keyword.other.metadata.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': 
+          '2': 
             patterns:
               - include: '#variables'
 
       # setvar:variable=value
       - name: meta.setvar.secrules
-        match: (setvar|setenv|expirevar)(:)([^,"]+)
+        match: ((?:setvar|setenv|expirevar):)([^,"]+)
         captures:
           '1': {name: keyword.control.setvar.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3':
+          '2':
             patterns:
               - include: '#variables'
               - match: '='
@@ -242,37 +229,33 @@ repository:
 
       # skipAfter:label
       - name: meta.skipafter.secrules
-        match: (skipAfter)(:)([^,"]+)
+        match: (skipAfter:)([^,"]+)
         captures:
           '1': {name: keyword.control.flow.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: entity.name.label.secrules}
+          '2': {name: entity.name.label.secrules}
 
       # skip:number
       - name: meta.skip.secrules
-        match: (skip)(:)(\d+)
+        match: (skip:)(\d+)
         captures:
           '1': {name: keyword.control.flow.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: constant.numeric.secrules}
+          '2': {name: constant.numeric.secrules}
 
       # initcol, setsid, setuid, setrsc
       - name: meta.init.secrules
-        match: (initcol|setsid|setuid|setrsc)(:)([^,"]+)
+        match: ((?:initcol|setsid|setuid|setrsc):)([^,"]+)
         captures:
           '1': {name: keyword.control.init.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3':
+          '2':
             patterns:
               - include: '#variables'
 
       # exec:filepath
       - name: meta.exec.secrules
-        match: (exec)(:)([^,"]+)
+        match: (exec:)([^,"]+)
         captures:
           '1': {name: keyword.control.exec.secrules}
-          '2': {name: punctuation.separator.secrules}
-          '3': {name: string.unquoted.filepath.secrules}
+          '2': {name: string.unquoted.filepath.secrules}
 
       # Disruptive actions
       - name: keyword.control.disruptive.secrules
