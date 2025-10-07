@@ -547,116 +547,144 @@ export const documentation: Documentation = {
 
 	variables: {
 		ARGS: {
-			description: 'Contains all request parameters (query string and POST data combined).',
+			description: 'Contains all request parameters (query string and POST data combined).\n\nSupports selectors:\n\n- `ARGS:name` - Select specific parameter\n- `ARGS:/regex/` - Pattern match with regex\n- `!ARGS:name` - Exclude specific parameter\n- `&ARGS` - Count parameters\n\n**Note:** Regex selectors (:/pattern/) do not work in `ctl:ruleRemoveTargetById` or `SecRuleUpdateTargetById` - only exact names work there ([GitHub issue #717](https://github.com/owasp-modsecurity/ModSecurity/issues/717)).',
 			example: 'SecRule ARGS "@rx attack" "id:1,deny"',
+			whenToUse: 'Inspecting all user-supplied parameters in a single rule. Use `ARGS:name` for specific parameters, `ARGS:/^prefix_/` for pattern matching, or `!ARGS:csrf` to exclude specific params.',
 		},
 		ARGS_GET: {
-			description: 'Contains all query string (GET) parameters.',
+			description: 'Contains all query string (GET) parameters. Supports the same selectors as ARGS (`:name`, `:/regex/`, `!:name`, `&`).',
 			example: 'SecRule ARGS_GET "@rx attack" "id:1,deny"',
+			whenToUse: 'When you specifically need to inspect query string parameters separately from POST data.',
 		},
 		ARGS_POST: {
-			description: 'Contains all POST parameters.',
+			description: 'Contains all POST parameters. Supports the same selectors as ARGS (`:name`, `:/regex/`, `!:name`, `&`).',
 			example: 'SecRule ARGS_POST "@rx attack" "id:1,deny"',
+			whenToUse: 'When you specifically need to inspect POST body parameters separately from query strings.',
 		},
 		ARGS_NAMES: {
-			description: 'Contains all parameter names (both GET and POST).',
+			description: 'Contains all parameter names (both GET and POST). Useful for detecting suspicious parameter names. Supports the same selectors as ARGS.',
 			example: 'SecRule ARGS_NAMES "@rx (cmd|exec)" "id:1,deny"',
+			whenToUse: 'Detecting malicious patterns in parameter names themselves (e.g., parameters called "cmd", "eval", or "__proto__").',
 		},
 		REQUEST_URI: {
 			description: 'Contains the full request URI (with query string, but normalized).',
 			example: 'SecRule REQUEST_URI "@contains /admin" "id:1,deny"',
+			whenToUse: 'Path-based detection after normalization (e.g., blocking admin paths, detecting directory traversal patterns).',
 		},
 		REQUEST_URI_RAW: {
 			description: 'Contains the full request URI exactly as it was received (not normalized).',
 			example: 'SecRule REQUEST_URI_RAW "@contains %00" "id:1,deny"',
+			whenToUse: 'Detecting evasion attempts that rely on encoding or obfuscation (e.g., null bytes, double encoding).',
 		},
 		REQUEST_FILENAME: {
 			description: 'Contains the file path portion of the request URI (no query string).',
 			example: 'SecRule REQUEST_FILENAME "@endsWith .php" "id:1,pass"',
+			whenToUse: 'File extension checks or path-based rules without query string interference.',
 		},
 		REQUEST_METHOD: {
 			description: 'Contains the request method (GET, POST, etc.).',
 			example: 'SecRule REQUEST_METHOD "!@within GET POST HEAD" "id:1,deny"',
+			whenToUse: 'Restricting allowed HTTP methods or applying method-specific rules.',
 		},
 		REQUEST_PROTOCOL: {
 			description: 'Contains the request protocol (HTTP/1.0, HTTP/1.1, etc.).',
 			example: 'SecRule REQUEST_PROTOCOL "!@streq HTTP/1.1" "id:1,log"',
+			whenToUse: 'Detecting old protocol versions or protocol anomalies.',
 		},
 		REQUEST_HEADERS: {
-			description: 'Contains all request headers.',
+			description: 'Contains all request headers. Supports selectors like `REQUEST_HEADERS:name` or `REQUEST_HEADERS:/regex/`.',
 			example: 'SecRule REQUEST_HEADERS:User-Agent "@contains bot" "id:1,deny"',
+			whenToUse: 'Inspecting HTTP headers for attacks or anomalies (e.g., detecting malicious User-Agents, missing required headers, or header injection).',
 		},
 		REQUEST_HEADERS_NAMES: {
-			description: 'Contains all request header names.',
+			description: 'Contains all request header names. Supports selectors.',
 			example: 'SecRule REQUEST_HEADERS_NAMES "@rx ^X-" "id:1,log"',
+			whenToUse: 'Detecting suspicious or unexpected header names (e.g., custom headers that might indicate probing or specific attack tools).',
 		},
 		REQUEST_COOKIES: {
-			description: 'Contains all request cookies.',
+			description: 'Contains all request cookies. Supports selectors like `REQUEST_COOKIES:name` or `REQUEST_COOKIES:/regex/`.',
 			example: 'SecRule REQUEST_COOKIES:sessionid "@rx [^a-zA-Z0-9]" "id:1,deny"',
+			whenToUse: 'Validating cookie values or detecting cookie-based attacks (e.g., session fixation, XSS in cookies).',
 		},
 		REQUEST_COOKIES_NAMES: {
-			description: 'Contains all request cookie names.',
+			description: 'Contains all request cookie names. Supports selectors.',
 			example: 'SecRule REQUEST_COOKIES_NAMES "@rx __" "id:1,log"',
+			whenToUse: 'Detecting suspicious cookie names that might indicate framework-specific attacks or tracking mechanisms.',
 		},
 		REQUEST_BODY: {
 			description: 'Contains the raw request body (POST data).',
 			example: 'SecRule REQUEST_BODY "@contains malware" "id:1,deny"',
+			whenToUse: 'Inspecting the entire POST body for patterns (less common than using ARGS since it includes raw format without parsing).',
 		},
 		RESPONSE_HEADERS: {
-			description: 'Contains all response headers.',
+			description: 'Contains all response headers. Supports selectors like `RESPONSE_HEADERS:name` or `RESPONSE_HEADERS:/regex/`.',
 			example: 'SecRule RESPONSE_HEADERS:Content-Type "@contains text/html" "id:1,pass"',
+			whenToUse: 'Validating response headers or detecting information leakage in headers (e.g., server version disclosure).',
 		},
 		RESPONSE_BODY: {
 			description: 'Contains the response body.',
 			example: 'SecRule RESPONSE_BODY "@contains SSN:" "id:1,deny,msg:\'Data Leakage\'"',
+			whenToUse: 'Data leakage prevention - detecting sensitive data in responses (credit cards, SSNs, API keys, SQL errors).',
 		},
 		RESPONSE_STATUS: {
 			description: 'Contains the response status code.',
 			example: 'SecRule RESPONSE_STATUS "@eq 500" "id:1,log,auditlog"',
+			whenToUse: 'Logging or alerting on specific status codes (e.g., track 500 errors, detect 404 scanning).',
 		},
 		REMOTE_ADDR: {
 			description: 'Contains the IP address of the remote client.',
 			example: 'SecRule REMOTE_ADDR "@ipMatch 10.0.0.0/8" "id:1,deny"',
+			whenToUse: 'IP-based access control, blacklisting, or whitelisting trusted networks.',
 		},
 		REMOTE_HOST: {
 			description: 'Contains the hostname of the remote client (if available).',
 			example: 'SecRule REMOTE_HOST "@endsWith .cn" "id:1,log"',
+			whenToUse: 'Hostname-based filtering when reverse DNS is configured (less reliable than IP-based filtering).',
 		},
 		REMOTE_USER: {
 			description: 'Contains the authenticated username (if HTTP authentication is used).',
 			example: 'SecRule REMOTE_USER "@streq admin" "id:1,log"',
+			whenToUse: 'Applying different rules based on authenticated user or logging specific user activity.',
 		},
 		TX: {
-			description: 'Transaction collection - used for storing temporary data during transaction processing.',
+			description: 'Transaction collection - used for storing temporary data during transaction processing. Supports selectors like `TX:name`.',
 			example: 'SecRule TX:anomaly_score "@gt 5" "id:1,deny"',
+			whenToUse: 'Anomaly scoring, storing state between rules, or passing data between phases.',
 		},
 		MATCHED_VAR: {
 			description: 'Contains the value of the variable that matched in the current rule.',
 			example: 'SecRule ARGS "@rx attack" "id:1,deny,msg:\'Attack: %{MATCHED_VAR}\'"',
+			whenToUse: 'Including the actual matched value in log messages or further rule logic.',
 		},
 		MATCHED_VAR_NAME: {
 			description: 'Contains the name of the variable that matched in the current rule.',
 			example: 'SecRule ARGS "@rx attack" "id:1,deny,msg:\'Attack in %{MATCHED_VAR_NAME}\'"',
+			whenToUse: 'Including which specific parameter/header/variable matched in log messages.',
 		},
 		FILES: {
-			description: 'Contains uploaded files (multipart/form-data).',
+			description: 'Contains uploaded files (multipart/form-data). Supports selectors.',
 			example: 'SecRule FILES "@rx malware" "id:1,deny"',
+			whenToUse: 'Inspecting file upload content for malware signatures or malicious patterns.',
 		},
 		FILES_NAMES: {
-			description: 'Contains the names of uploaded files.',
+			description: 'Contains the names of uploaded files. Supports selectors.',
 			example: 'SecRule FILES_NAMES "@endsWith .exe" "id:1,deny"',
+			whenToUse: 'Blocking specific file types by extension or detecting suspicious filenames.',
 		},
 		XML: {
-			description: 'Contains parsed XML data (when requestBodyProcessor=XML is used).',
+			description: 'Contains parsed XML data (when requestBodyProcessor=XML is used). Supports XPath-like selectors.',
 			example: 'SecRule XML://@username "@contains admin" "id:1,deny"',
+			whenToUse: 'Inspecting XML/SOAP requests by accessing specific XML elements or attributes (e.g., validating XML structure, detecting XML injection).',
 		},
 		GEO: {
-			description: 'Contains geolocation data after @geoLookup operator is used.',
+			description: 'Contains geolocation data after @geoLookup operator is used. Access fields like GEO:COUNTRY_CODE, GEO:COUNTRY_NAME, GEO:REGION, GEO:CITY.',
 			example: 'SecRule GEO:COUNTRY_CODE "@streq CN" "id:1,deny"',
+			whenToUse: 'Geographic access control after performing a @geoLookup (e.g., blocking specific countries, alerting on unusual locations).',
 		},
 		DURATION: {
 			description: 'Contains the number of milliseconds elapsed since the beginning of the transaction.',
 			example: 'SecRule DURATION "@gt 1000" "id:1,log,msg:\'Slow request\'"',
+			whenToUse: 'Detecting slow requests that might indicate DoS attacks or application performance issues.',
 		},
 	},
 }
