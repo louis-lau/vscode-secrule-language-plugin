@@ -39,15 +39,17 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
+    "compile": "npm run generate-docs && tsc -p ./",
+    "generate-docs": "node scripts/generate-docs.js",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile"
   },
+  "dependencies": {},
   "devDependencies": {
+    "js-yaml": "^4.1.0",
     "@types/node": "^18.0.0",
     "@types/vscode": "^1.50.0",
     "@vscode/vsce": "^2.0.0",
-    "js-yaml": "^4.1.0",
     "prettier": "^3.6.2",
     "typescript": "^5.0.0",
     "vscode-tmgrammar-test": "^0.1.3"
