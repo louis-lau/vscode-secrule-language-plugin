@@ -98,7 +98,7 @@ repository:
     patterns:
       # Plain quoted string (implicit @rx pattern) - doesn't contain action keywords like id:, phase:, etc.
       - name: string.quoted.double.secrules
-        match: '"(?!.*\b(?:id|phase|t|pass|deny|block|allow|drop|redirect|log|nolog|msg|ctl|setvar|chain):)[^"]*"'
+        match: '"(?!.*\b(?:id|phase|t|pass|deny|block|allow|drop|redirect|log|nolog|msg|ctl|setvar|chain):)(?:[^"\\]|\\.)*"'
         
   operator-string:
     patterns:
@@ -116,7 +116,7 @@ repository:
           '1': {name: string.quoted.double.secrules}
           '3': {name: keyword.operator.logical.secrules}
           '4': {name: support.function.secrules}
-        end: '"'
+        end: '(?<!\\)(?:\\\\)*"'
         endCaptures:
           '0': {name: string.quoted.double.secrules}
         contentName: string.unquoted.secrules
@@ -128,7 +128,7 @@ repository:
         begin: '"(?!@)'
         beginCaptures:
           '0': {name: string.quoted.double.secrules}
-        end: '"'
+        end: '(?<!\\)(?:\\\\)*"'
         endCaptures:
           '0': {name: string.quoted.double.secrules}
         patterns:
