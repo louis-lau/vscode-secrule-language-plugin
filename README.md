@@ -22,7 +22,16 @@ Each hover tooltip includes:
 - Syntax information
 - Usage examples
 - Important notes and warnings
-
 ## Documentation Source
 
 The hover documentation was extracted from the official ModSecurity Reference Manual (v3.x) by GPT5, with some manual additions. If there are any mistakes, PRs are welcome!
+
+### Unit tests
+
+```bash
+npm run test
+```
+
+Uses `vscode-tmgrammar-test` for unit tests. See docs: [vscode-tmgrammar-test](https://github.com/PanAeon/vscode-tmgrammar-test).
+
+If you find and fix a syntax highlighting issue, please create a unit test for it before fixing it or creating a PR.

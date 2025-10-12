@@ -42,7 +42,8 @@
     "compile": "npm run generate-docs && tsc -p ./",
     "generate-docs": "node scripts/generate-docs.js",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile"
+    "pretest": "npm run compile",
+    "test": "npx vscode-tmgrammar-test -c -g syntaxes/secrules.tmLanguage.json 'tests/unit/**/*.test.secrules'"
   },
   "dependencies": {},
   "devDependencies": {

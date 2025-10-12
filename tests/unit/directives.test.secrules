@@ -1,0 +1,14 @@
+# SYNTAX TEST "source.secrules" "Misc directives"
+
+SecDefaultAction "phase:1,log,pass"
+#^^^^^^^^^^^^^^^ keyword.control.directive.secrules
+#                 ^^^^^^ keyword.other.phase.secrules
+#                         ^^^ keyword.control.action.secrules
+#                             ^^^^ keyword.control.action.secrules
+
+SecRuleRemoveById 942100
+#^^^^^^^^^^^^^^^^ keyword.control.directive.secrules
+
+SecMarker "BEGIN_RULES"
+#^^^^^^^^ keyword.control.directive.secrules
+

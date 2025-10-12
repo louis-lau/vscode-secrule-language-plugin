@@ -1,0 +1,23 @@
+# SYNTAX TEST "source.secrules" "Actions and metadata"
+
+SecRule ARGS "@rx test" "id:301,phase:2,pass,log,msg:'Hello',tag:'app',setvar:'tx.flag=1'"
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^ variable.language.secrules
+#             ^^^ support.function.secrules
+#                 ^^^^ string.unquoted.secrules
+#                        ^^^ keyword.other.id.secrules
+#                           ^^^ constant.numeric.id.secrules
+#                               ^^^^^^ keyword.other.phase.secrules
+#                                     ^ constant.numeric.secrules
+#                                       ^^^^ keyword.control.action.secrules
+#                                            ^^^ keyword.control.action.secrules
+#                                                ^^^^ keyword.other.msg.secrules
+#                                                    ^^^^^^^ string.quoted.secrules
+#                                                            ^^^^ keyword.other.tag.secrules
+#                                                                      ^^^^^^^ keyword.other.setvar.secrules
+
+SecDefaultAction "phase:1,log,pass"
+#^^^^^^^^^^^^^^^ keyword.control.directive.secrules
+#                 ^^^^^^ keyword.other.phase.secrules
+#                             ^^^^ keyword.control.action.secrules
+

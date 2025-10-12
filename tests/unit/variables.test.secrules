@@ -1,0 +1,34 @@
+# SYNTAX TEST "source.secrules" "Variables and pipes"
+
+SecRule ARGS:username "@rx ^[a-z]+$" "id:501,phase:2,deny"
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^ variable.language.secrules
+#                      ^^^ support.function.secrules
+#                                     ^^^ keyword.other.id.secrules
+#                                            ^^^^^^ keyword.other.phase.secrules
+#                                                    ^^^^ keyword.control.disruptive.secrules
+
+SecRule ARGS|REQUEST_HEADERS|REQUEST_COOKIES "@rx attack" "id:503,phase:2,deny"
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^ variable.language.secrules
+#           ^ keyword.operator.pipe.secrules
+#                           ^ keyword.operator.pipe.secrules
+#                                             ^^^ support.function.secrules
+#                                                          ^^^ keyword.other.id.secrules
+#                                                                 ^^^^^^ keyword.other.phase.secrules
+#                                                                         ^^^^ keyword.control.disruptive.secrules
+
+SecRule !ARGS "@rx skip" "id:504,phase:1,pass"
+#^^^^^^ keyword.control.directive.secrules
+#       ^ keyword.operator.logical.secrules
+#        ^^^^ variable.language.secrules
+#              ^^^ support.function.secrules
+#                                        ^^^^ keyword.control.action.secrules
+
+SecRule &ARGS "@gt 10" "id:505,phase:1,deny"
+#^^^^^^ keyword.control.directive.secrules
+#       ^ keyword.operator.count.secrules
+#        ^^^^ variable.language.secrules
+#              ^^^ support.function.secrules
+#                                      ^^^^ keyword.control.disruptive.secrules
+

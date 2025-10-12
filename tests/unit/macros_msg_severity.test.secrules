@@ -1,0 +1,12 @@
+# SYNTAX TEST "source.secrules" "Macros, msg, severity"
+
+SecRule REQUEST_URI "@rx %{REQUEST_FILENAME}" "id:601,phase:2,deny,msg:'Attack from %{REMOTE_ADDR}',severity:'CRITICAL'"
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^^^^^^^^ variable.language.secrules
+#                    ^^^ support.function.secrules
+#                                              ^^^ keyword.other.id.secrules
+#                                                     ^^^^^^ keyword.other.phase.secrules
+#                                                             ^^^^ keyword.control.disruptive.secrules
+#                                                                  ^^^^ keyword.other.msg.secrules
+#                                                                                                   ^^^^^^^^^ keyword.other.severity.secrules
+

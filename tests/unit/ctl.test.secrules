@@ -1,0 +1,27 @@
+# SYNTAX TEST "source.secrules" "CTL variants"
+
+SecAction "id:400,phase:1,pass,ctl:ruleRemoveTargetById=942200;ARGS:param"
+#^^^^^^^^ keyword.control.directive.secrules
+#          ^^^ keyword.other.id.secrules
+#                 ^^^^^^ keyword.other.phase.secrules
+#                         ^^^^ keyword.control.action.secrules
+#                              ^^^^ keyword.control.ctl.secrules
+#                                  ^^^^^^^^^^^^^^^^^^^^ support.function.ctl.secrules
+#                                                      ^ keyword.operator.assignment.secrules
+#                                                             ^ punctuation.separator.semicolon.secrules
+#                                                              ^^^^ variable.language.secrules
+
+SecAction "id:401,phase:1,pass,ctl:ruleRemoveTargetByTag=OWASP_CRS;ARGS:param"
+#^^^^^^^^ keyword.control.directive.secrules
+#                              ^^^^ keyword.control.ctl.secrules
+#                                  ^^^^^^^^^^^^^^^^^^^^^ support.function.ctl.secrules
+#                                                       ^ keyword.operator.assignment.secrules
+#                                                                 ^ punctuation.separator.semicolon.secrules
+#                                                                  ^^^^ variable.language.secrules
+
+SecAction "id:402,phase:1,pass,ctl:ruleRemoveTargetById=942200;REQUEST_COOKIES"
+#^^^^^^^^ keyword.control.directive.secrules
+#                              ^^^^ keyword.control.ctl.secrules
+#                                  ^^^^^^^^^^^^^^^^^^^^ support.function.ctl.secrules
+#                                                              ^^^^^^^^^^^^^^^ variable.language.secrules
+

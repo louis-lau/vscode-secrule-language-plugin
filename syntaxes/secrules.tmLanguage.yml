@@ -25,8 +25,8 @@ repository:
           - include: '#directives'
           - include: '#variables'
           - include: '#operator-string'
-          - include: '#plain-string'
           - include: '#action-string'
+          - include: '#plain-string'
 
       # SecAction directive  
       - name: meta.secaction.secrules
@@ -37,6 +37,24 @@ repository:
         patterns:
           - include: '#line-continuation'
           - include: '#action-string'
+
+      # SecDefaultAction directive with parsed action list
+      - name: meta.secdefaultaction.secrules
+        begin: \b(SecDefaultAction)\b
+        beginCaptures:
+          '1': {name: keyword.control.directive.secrules}
+        end: ^(?=\S)
+        patterns:
+          - include: '#line-continuation'
+          - name: meta.actions.secrules
+            begin: '"'
+            beginCaptures:
+              '0': {name: string.quoted.double.secrules}
+            end: '(?<!\\)(?:\\\\)*"'
+            endCaptures:
+              '0': {name: string.quoted.double.secrules}
+            patterns:
+              - include: '#action-list'
 
       # SecRuleRemoveById, SecRuleUpdateActionById, etc. with numeric ID
       - name: meta.secrule-id-directive.secrules
@@ -96,9 +114,13 @@ repository:
 
   plain-string:
     patterns:
-      # Plain quoted string (implicit @rx pattern) - doesn't contain action keywords like id:, phase:, etc.
+      # Plain quoted string (implicit @rx pattern) - doesn't start with @
       - name: string.quoted.double.secrules
-        match: '"(?!.*\b(?:id|phase|t|pass|deny|block|allow|drop|redirect|log|nolog|msg|ctl|setvar|chain):)(?:[^"\\]|\\.)*"'
+        match: '"(?!@)(?:[^"\\]|\\.)*"'
+      
+      # Plain unquoted string (no spaces) - doesn't start with quote or @
+      - name: string.unquoted.secrules
+        match: (?!["@])[^\s"]+
         
   operator-string:
     patterns:
@@ -123,9 +145,9 @@ repository:
 
   action-string:
     patterns:
-      # Action string - the quoted string with actions (doesn't start with @)
+      # Action string - the quoted string with actions (doesn't start with @ and DOES contain action keywords)
       - name: meta.actions.secrules
-        begin: '"(?!@)'
+        begin: '"(?!@)(?=(?:[^"\\]|\\.)*\b(?:id|phase|t|pass|deny|block|allow|drop|redirect|log|nolog|msg|ctl|setvar|chain):)'
         beginCaptures:
           '0': {name: string.quoted.double.secrules}
         end: '(?<!\\)(?:\\\\)*"'
@@ -251,25 +273,47 @@ repository:
                 match: .+
           '4': {name: string.quoted.secrules}
 
-      # logdata, tag, ver, rev, maturity, accuracy with quoted strings
+      # tag:'text' or tag:"text" (specific scoping)
+      - name: meta.tag.secrules
+        match: (tag:)(['"])([^'"]+)(['"])
+        captures:
+          '1': {name: keyword.other.tag.secrules}
+          '2': {name: string.quoted.secrules}
+          '3':
+            patterns:
+              - include: '#variables'
+              - name: string.quoted.secrules
+                match: .+
+          '4': {name: string.quoted.secrules}
+
+      # logdata, ver, rev, maturity, accuracy with quoted strings (generic)
       - name: meta.metadata.secrules
-        match: ((?:logdata|tag|ver|rev|maturity|accuracy):)(['"])([^'"]+)(['"])
+        match: ((?:logdata|ver|rev|maturity|accuracy):)(['"])([^'"]+)(['"])
         captures:
           '1': {name: keyword.other.metadata.secrules}
           '2': {name: string.quoted.secrules}
-          '3': 
+          '3':
             patterns:
               - include: '#variables'
               - name: string.quoted.secrules
                 match: .+
           '4': {name: string.quoted.secrules}
       
-      # logdata, tag, ver, rev, maturity, accuracy without quotes
+      # tag without quotes (specific)
+      - name: meta.tag.secrules
+        match: (tag:)([^,"']+)
+        captures:
+          '1': {name: keyword.other.tag.secrules}
+          '2':
+            patterns:
+              - include: '#variables'
+
+      # logdata, ver, rev, maturity, accuracy without quotes (generic)
       - name: meta.metadata.secrules
-        match: ((?:logdata|tag|ver|rev|maturity|accuracy):)([^,"']+)
+        match: ((?:logdata|ver|rev|maturity|accuracy):)([^,"']+)
         captures:
           '1': {name: keyword.other.metadata.secrules}
-          '2': 
+          '2':
             patterns:
               - include: '#variables'
 
@@ -277,7 +321,7 @@ repository:
       - name: meta.setvar.secrules
         match: ((?:setvar|setenv|expirevar):)(['"])([^'"]+)(['"])
         captures:
-          '1': {name: keyword.control.setvar.secrules}
+          '1': {name: keyword.other.setvar.secrules}
           '2': {name: string.quoted.secrules}
           '3':
             patterns:
@@ -292,7 +336,7 @@ repository:
       - name: meta.setvar.secrules
         match: ((?:setvar|setenv|expirevar):)([^,"']+)
         captures:
-          '1': {name: keyword.control.setvar.secrules}
+          '1': {name: keyword.other.setvar.secrules}
           '2':
             patterns:
               - include: '#variables'
@@ -331,11 +375,11 @@ repository:
 
       # Disruptive actions
       - name: keyword.control.disruptive.secrules
-        match: \b(allow|block|deny|drop|pass|redirect|proxy)\b
+        match: \b(allow|block|deny|drop|redirect|proxy)\b
 
       # Non-disruptive actions
       - name: keyword.control.action.secrules
-        match: \b(log|nolog|auditlog|noauditlog|capture|chain|multiMatch|pause)\b
+        match: \b(log|nolog|auditlog|noauditlog|capture|chain|multiMatch|pause|pass)\b
 
       # Variables in actions
       - include: '#variables'
