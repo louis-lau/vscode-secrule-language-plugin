@@ -10,7 +10,4 @@ vsc-extension-quickstart.md
 !out/**/*.js
 test/**
 .github/**
-
-
-
-
+local/

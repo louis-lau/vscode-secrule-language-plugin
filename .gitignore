@@ -4,3 +4,4 @@ out/
 *.vsix
 src/documentation.ts
 syntaxes/secrules.tmLanguage.json
+local/

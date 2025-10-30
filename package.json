@@ -1,6 +1,6 @@
 {
   "name": "secrules-syntax",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "SecRules Syntax Highlighting (ModSecurity & Coroza)",
   "description": "Syntax highlighting and hover docs plugin for SecRules, the language used by ModSecurity and Coroza",
   "repository": {
@@ -54,8 +54,10 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "compile": "npm run generate-docs && tsc -p ./",
+    "clean": "rm -rf out syntaxes/secrules.tmLanguage.json",
+    "compile": "npm run clean && npm run convert-grammar && npm run generate-docs && tsc -p ./",
     "generate-docs": "node scripts/generate-docs.js",
+    "convert-grammar": "npx js-yaml syntaxes/secrules.tmLanguage.yml > syntaxes/secrules.tmLanguage.json",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
     "test": "npx vscode-tmgrammar-test -c -g syntaxes/secrules.tmLanguage.json 'tests/unit/**/*.test.secrules'"
