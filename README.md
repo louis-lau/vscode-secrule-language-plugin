@@ -1,6 +1,8 @@
 # SecRules Language Support for VSCode
 
-A Visual Studio Code extension that provides comprehensive language support for ModSecurity SecRules configuration files.
+A Visual Studio Code extension that provides syntax highlighting and hover documentation for SecRules, the language used by ModSecurity and Coroza.
+
+![Screenshot showing the extension in action](./img/screenshot.png)
 
 ## Features
 
