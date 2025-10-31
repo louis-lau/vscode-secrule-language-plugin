@@ -22,3 +22,16 @@ SecRule REQUEST_FILENAME "@endsWith /wp-admin/edit.php" \
 #                             ^^^^^^ constant.numeric.secrules
 #                                    ^^^^^^^^^^^^^ variable.language.secrules
 
+SecRule REQUEST_FILENAME "@rx ^/index\.php/\w+/system_config/save/section/customer/key/\w+/$" \
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^^^^^^^^^^^^^ variable.language.secrules
+#                         ^^^ support.function.secrules
+
+"id:1038012,phase:1,t:none,nolog,pass,block,"
+#^^^ keyword.other.id.secrules
+#   ^^^^^^^ constant.numeric.id.secrules
+#           ^^^^^^ keyword.other.phase.secrules
+#                 ^ constant.numeric.secrules
+#                                ^^^^ keyword.control.action.secrules
+#                                     ^^^^^ keyword.control.disruptive.secrules
+

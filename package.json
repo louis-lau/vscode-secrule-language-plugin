@@ -1,6 +1,6 @@
 {
   "name": "secrules-syntax",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "SecRules Syntax Highlighting (ModSecurity & Coroza)",
   "description": "Syntax highlighting and hover docs plugin for SecRules, the language used by ModSecurity and Coroza",
   "repository": {

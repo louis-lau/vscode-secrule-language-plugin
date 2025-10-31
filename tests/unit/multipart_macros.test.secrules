@@ -1,0 +1,24 @@
+# SYNTAX TEST "source.secrules" "Multi-line SecRule with macros in msg"
+
+SecRule MULTIPART_STRICT_ERROR "!@eq 0" \
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^^^^^^^^^^^^^^^^^^^ variable.language.secrules
+#                               ^ keyword.operator.logical.secrules
+#                                ^^^ support.function.secrules
+
+"id:'200003',phase:2,t:none,log,deny,status:400, \
+#^^^ keyword.other.id.secrules
+#            ^^^^^^ keyword.other.phase.secrules
+#                           ^^^ keyword.control.action.secrules
+#                               ^^^^ keyword.control.disruptive.secrules
+#                                    ^^^^^^^ keyword.other.status.secrules
+#                                           ^^^ constant.numeric.secrules
+
+msg:'Multipart request body failed strict validation: \
+#^^^ keyword.other.msg.secrules
+
+PE %{REQBODY_PROCESSOR_ERROR}'
+#  ^^ punctuation.definition.macro.begin.secrules
+#    ^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.secrules
+#                           ^ punctuation.definition.macro.end.secrules
+

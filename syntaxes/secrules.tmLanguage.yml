@@ -19,7 +19,7 @@ repository:
         begin: \b(SecRule)\b
         beginCaptures:
           '1': {name: keyword.control.directive.secrules}
-        end: ^(?=\S)
+        end: ^(?=[^\s"])
         patterns:
           - include: '#line-continuation'
           - include: '#directives'
@@ -33,7 +33,7 @@ repository:
         begin: \b(SecAction)\b
         beginCaptures:
           '1': {name: keyword.control.directive.secrules}
-        end: ^(?=\S)
+        end: ^(?=[^\s"])
         patterns:
           - include: '#line-continuation'
           - include: '#action-string'
@@ -43,7 +43,7 @@ repository:
         begin: \b(SecDefaultAction)\b
         beginCaptures:
           '1': {name: keyword.control.directive.secrules}
-        end: ^(?=\S)
+        end: ^(?=[^\s"])
         patterns:
           - include: '#line-continuation'
           - name: meta.actions.secrules
@@ -173,6 +173,15 @@ repository:
           '1': {name: keyword.other.phase.secrules}
           '2': {name: constant.numeric.secrules}
 
+      # id:'number' or id:"number" (quoted)
+      - name: meta.id.secrules
+        match: (id:)(['"])(\d+)(['"])
+        captures:
+          '1': {name: keyword.other.id.secrules}
+          '2': {name: string.quoted.secrules}
+          '3': {name: constant.numeric.id.secrules}
+          '4': {name: string.quoted.secrules}
+
       # id:number
       - name: meta.id.secrules
         match: (id:)(\d+)\b
@@ -260,18 +269,33 @@ repository:
           '3': {name: keyword.operator.assignment.secrules}
           '4': {name: string.unquoted.secrules}
 
-      # msg:'text' or msg:"text"
+      # msg:'text' (multi-line, single-quoted)
       - name: meta.msg.secrules
-        match: (msg:)(['"])([^'"]+)(['"])
-        captures:
+        begin: (msg:)(')
+        beginCaptures:
           '1': {name: keyword.other.msg.secrules}
           '2': {name: string.quoted.secrules}
-          '3': 
-            patterns:
-              - include: '#variables'
-              - name: string.quoted.secrules
-                match: .+
-          '4': {name: string.quoted.secrules}
+        end: (')
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#line-continuation'
+          - include: '#variables'
+
+      # msg:"text" (multi-line, double-quoted)
+      - name: meta.msg.secrules
+        begin: (msg:)(")
+        beginCaptures:
+          '1': {name: keyword.other.msg.secrules}
+          '2': {name: string.quoted.secrules}
+        end: (")
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#line-continuation'
+          - include: '#variables'
 
       # tag:'text' or tag:"text" (specific scoping)
       - name: meta.tag.secrules
