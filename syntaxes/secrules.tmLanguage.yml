@@ -74,9 +74,9 @@ repository:
 
   variables:
     patterns:
-      # Macro expansion %{VARIABLE.field}
+      # Macro expansion %{VARIABLE.field} or %{tx.field}
       - name: variable.other.macro.secrules
-        match: (%\{)([A-Z_]+(?:\.[A-Za-z0-9_\-]+)?)(\})
+        match: (%\{)([A-Za-z_]+(?:\.[A-Za-z0-9_\-]+)*)(\})
         captures:
           '1': {name: punctuation.definition.macro.begin.secrules}
           '2': {name: variable.other.readwrite.secrules}
@@ -142,6 +142,8 @@ repository:
         endCaptures:
           '0': {name: string.quoted.double.secrules}
         contentName: string.unquoted.secrules
+        patterns:
+          - include: '#variables'
 
   action-string:
     patterns:
@@ -297,31 +299,57 @@ repository:
           - include: '#line-continuation'
           - include: '#variables'
 
-      # tag:'text' or tag:"text" (specific scoping)
+      # tag:'text' (single-quoted)
       - name: meta.tag.secrules
-        match: (tag:)(['"])([^'"]+)(['"])
-        captures:
+        begin: (tag:)(')
+        beginCaptures:
           '1': {name: keyword.other.tag.secrules}
           '2': {name: string.quoted.secrules}
-          '3':
-            patterns:
-              - include: '#variables'
-              - name: string.quoted.secrules
-                match: .+
-          '4': {name: string.quoted.secrules}
+        end: (')
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#variables'
 
-      # logdata, ver, rev, maturity, accuracy with quoted strings (generic)
+      # tag:"text" (double-quoted)
+      - name: meta.tag.secrules
+        begin: (tag:)(")
+        beginCaptures:
+          '1': {name: keyword.other.tag.secrules}
+          '2': {name: string.quoted.secrules}
+        end: (")
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#variables'
+
+      # logdata, ver, rev, maturity, accuracy with single quotes
       - name: meta.metadata.secrules
-        match: ((?:logdata|ver|rev|maturity|accuracy):)(['"])([^'"]+)(['"])
-        captures:
+        begin: ((?:logdata|ver|rev|maturity|accuracy):)(')
+        beginCaptures:
           '1': {name: keyword.other.metadata.secrules}
           '2': {name: string.quoted.secrules}
-          '3':
-            patterns:
-              - include: '#variables'
-              - name: string.quoted.secrules
-                match: .+
-          '4': {name: string.quoted.secrules}
+        end: (')
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#variables'
+
+      # logdata, ver, rev, maturity, accuracy with double quotes
+      - name: meta.metadata.secrules
+        begin: ((?:logdata|ver|rev|maturity|accuracy):)(")
+        beginCaptures:
+          '1': {name: keyword.other.metadata.secrules}
+          '2': {name: string.quoted.secrules}
+        end: (")
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#variables'
       
       # tag without quotes (specific)
       - name: meta.tag.secrules
@@ -341,20 +369,35 @@ repository:
             patterns:
               - include: '#variables'
 
-      # setvar:'variable=value' with quotes
+      # setvar:'variable=value' (single-quoted)
       - name: meta.setvar.secrules
-        match: ((?:setvar|setenv|expirevar):)(['"])([^'"]+)(['"])
-        captures:
+        begin: ((?:setvar|setenv|expirevar):)(')
+        beginCaptures:
           '1': {name: keyword.other.setvar.secrules}
           '2': {name: string.quoted.secrules}
-          '3':
-            patterns:
-              - include: '#variables'
-              - match: '='
-                name: keyword.operator.assignment.secrules
-              - name: string.quoted.secrules
-                match: .+
-          '4': {name: string.quoted.secrules}
+        end: (')
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#variables'
+          - match: '='
+            name: keyword.operator.assignment.secrules
+
+      # setvar:"variable=value" (double-quoted)
+      - name: meta.setvar.secrules
+        begin: ((?:setvar|setenv|expirevar):)(")
+        beginCaptures:
+          '1': {name: keyword.other.setvar.secrules}
+          '2': {name: string.quoted.secrules}
+        end: (")
+        endCaptures:
+          '1': {name: string.quoted.secrules}
+        contentName: string.quoted.secrules
+        patterns:
+          - include: '#variables'
+          - match: '='
+            name: keyword.operator.assignment.secrules
       
       # setvar:variable=value without quotes
       - name: meta.setvar.secrules

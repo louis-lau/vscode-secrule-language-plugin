@@ -17,8 +17,20 @@ SecRule MULTIPART_STRICT_ERROR "!@eq 0" \
 msg:'Multipart request body failed strict validation: \
 #^^^ keyword.other.msg.secrules
 
-PE %{REQBODY_PROCESSOR_ERROR}'
+PE %{REQBODY_PROCESSOR_ERROR}'"
 #  ^^ punctuation.definition.macro.begin.secrules
 #    ^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.secrules
 #                           ^ punctuation.definition.macro.end.secrules
+
+SecRule ARGS:_charset_ "!@within |%{tx.allowed_request_content_type_charset}|" \
+#^^^^^^ keyword.control.directive.secrules
+#       ^^^^^ variable.language.secrules
+#                                 ^^ punctuation.definition.macro.begin.secrules
+#                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.secrules
+#                                                                          ^ punctuation.definition.macro.end.secrules
+
+"setvar:'tx.score=+%{tx.critical_anomaly_score}'"
+#^^^^^^^ keyword.other.setvar.secrules
+#                  ^^ punctuation.definition.macro.begin.secrules
+#                    ^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.secrules
 
