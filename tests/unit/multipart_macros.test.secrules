@@ -25,9 +25,11 @@ PE %{REQBODY_PROCESSOR_ERROR}'"
 SecRule ARGS:_charset_ "!@within |%{tx.allowed_request_content_type_charset}|" \
 #^^^^^^ keyword.control.directive.secrules
 #       ^^^^^ variable.language.secrules
+#                                ^ string.unquoted.secrules
 #                                 ^^ punctuation.definition.macro.begin.secrules
 #                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ variable.other.readwrite.secrules
 #                                                                          ^ punctuation.definition.macro.end.secrules
+#                                                                           ^ string.unquoted.secrules
 
 "setvar:'tx.score=+%{tx.critical_anomaly_score}'"
 #^^^^^^^ keyword.other.setvar.secrules
