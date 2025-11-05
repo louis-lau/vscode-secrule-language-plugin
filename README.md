@@ -4,6 +4,13 @@ A Visual Studio Code extension that provides syntax highlighting and hover docum
 
 ![Screenshot showing the extension in action](./img/screenshot.png)
 
+## Download
+
+[VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=louis-lau.secrules-syntax)  
+[Open VSX Registry](https://open-vsx.org/extension/louis-lau/secrules-syntax)  
+[Source Code](https://github.com/louis-lau/vscode-secrule-language-plugin)  
+
+
 ## Features
 
 ### Syntax Highlighting
@@ -23,7 +30,10 @@ Each hover tooltip includes:
 - Description of the keyword
 - Syntax information
 - Usage examples
-- Important notes and warnings
+- Desctiption of when to use the keyword
+- Related actions
+- Documentation link to the official ModSecurity Reference Manual (v3.x)
+
 ## Documentation Source
 
 The hover documentation was extracted from the official ModSecurity Reference Manual (v3.x) by GPT5, with some manual additions. If there are any mistakes, PRs are welcome!
