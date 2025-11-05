@@ -1,6 +1,6 @@
 # SecRules Language Support for VSCode
 
-A Visual Studio Code extension that provides syntax highlighting and hover documentation for SecRules, the language used by ModSecurity and Coroza.
+A Visual Studio Code extension (available [here](https://marketplace.visualstudio.com/items?itemName=louis-lau.secrules-syntax)) that provides syntax highlighting and hover documentation for SecRules, the language used by [ModSecurity](https://modsecurity.org/) and [Coraza](https://coraza.io/).
 
 ![Screenshot showing the extension in action](./img/screenshot.png)
 

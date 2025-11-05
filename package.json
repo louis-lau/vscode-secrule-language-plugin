@@ -1,15 +1,15 @@
 {
   "name": "secrules-syntax",
   "version": "1.0.2",
-  "displayName": "SecRules Syntax Highlighting (ModSecurity & Coroza)",
-  "description": "Syntax highlighting and hover docs plugin for SecRules, the language used by ModSecurity and Coroza",
+  "displayName": "SecRules Syntax Highlighting (ModSecurity & Coraza)",
+  "description": "Syntax highlighting and hover docs plugin for SecRules, the language used by ModSecurity and Coraza",
   "repository": {
     "type": "git",
     "url": "https://github.com/louis-lau/vscode-secrule-language-plugin.git"
   },
   "keywords": [
     "modsecurity",
-    "coroza",
+    "coraza",
     "secrules",
     "syntax",
     "highlighting",
