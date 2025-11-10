@@ -1,6 +1,6 @@
 {
   "name": "secrules-syntax",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "displayName": "SecLang Syntax Highlighting (ModSecurity & Coraza)",
   "description": "Syntax highlighting and hover docs plugin for SecLang, the language used by ModSecurity and Coraza",
   "repository": {
