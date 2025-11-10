@@ -1,13 +1,11 @@
-.vscode/**
-.vscode-test/**
-src/**
-.gitignore
-tsconfig.json
-vsc-extension-quickstart.md
-**/node_modules/**
-**/*.map
-**/*.ts
+# Ignore all files by default
+**/*
+
+# Explicitly include only files required for the extension
+!package.json
+!README.md
+!LICENSE
+!img/**
+!syntaxes/**/*.json
+!languages/**/*.json
 !out/**/*.js
-test/**
-.github/**
-local/
