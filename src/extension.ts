@@ -39,13 +39,13 @@ function createHoverMarkdown(
 	// Syntax
 	if (docEntry.syntax) {
 		markdown.appendMarkdown(`**Syntax:**\n`)
-		markdown.appendCodeblock(docEntry.syntax, 'secrules')
+		markdown.appendCodeblock(docEntry.syntax, 'seclang')
 	}
 
 	// Example
 	if (docEntry.example) {
 		markdown.appendMarkdown(`**Example:**\n`)
-		markdown.appendCodeblock(docEntry.example, 'secrules')
+		markdown.appendCodeblock(docEntry.example, 'seclang')
 	}
 
 	// Documentation link
@@ -70,10 +70,10 @@ function isActionInLine(word: string, lineText: string): boolean {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('SecRules extension activated')
+	console.log('SecLang extension activated')
 
-	// Register hover provider for secrules language
-	const hoverProvider = vscode.languages.registerHoverProvider('secrules', {
+	// Register hover provider for seclang language
+	const hoverProvider = vscode.languages.registerHoverProvider('seclang', {
 		provideHover(document: vscode.TextDocument, position: vscode.Position): vscode.ProviderResult<vscode.Hover> {
 			const wordRange = document.getWordRangeAtPosition(position, /[a-zA-Z_][a-zA-Z0-9_]*/)
 			if (!wordRange) {

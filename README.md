@@ -1,6 +1,6 @@
-# SecRules Language Support for VSCode
+# SecLang Language Support for VSCode
 
-A Visual Studio Code extension that provides syntax highlighting and hover documentation for SecRules, the language used by [ModSecurity](https://modsecurity.org/) and [Coraza](https://coraza.io/).
+A Visual Studio Code extension that provides syntax highlighting and hover documentation for SecLang, the language used by [ModSecurity](https://modsecurity.org/) and [Coraza](https://coraza.io/).
 
 ![Screenshot showing the extension in action](./img/screenshot.png)
 
@@ -14,12 +14,12 @@ A Visual Studio Code extension that provides syntax highlighting and hover docum
 ## Features
 
 ### Syntax Highlighting
-- Full syntax highlighting for ModSecurity SecRules directives
+- Full syntax highlighting for ModSecurity SecLang directives
 - Color-coded variables, operators, actions, and transformations
-- Support for `.secrules` and `.conf` file extensions
+- Support for `.conf` file extensions
 
 ### Hover Documentation
-Hover over any SecRules keyword to see detailed documentation including:
+Hover over any SecLang keyword to see detailed documentation including:
 - **Directives**: `SecRule`, `SecAction`, `SecRuleUpdateTargetById`, etc.
 - **Actions**: `id`, `phase`, `msg`, `deny`, `allow`, `block`, etc.
 - **Operators**: `@rx`, `@pm`, `@beginsWith`, `@detectSQLi`, etc.

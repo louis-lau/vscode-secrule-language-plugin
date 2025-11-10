@@ -3,5 +3,5 @@ node_modules
 out/
 *.vsix
 src/documentation.ts
-syntaxes/secrules.tmLanguage.json
+syntaxes/seclang.tmLanguage.json
 local/

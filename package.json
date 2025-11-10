@@ -1,8 +1,8 @@
 {
   "name": "secrules-syntax",
   "version": "1.0.2",
-  "displayName": "SecRules Syntax Highlighting (ModSecurity & Coraza)",
-  "description": "Syntax highlighting and hover docs plugin for SecRules, the language used by ModSecurity and Coraza",
+  "displayName": "SecLang Syntax Highlighting (ModSecurity & Coraza)",
+  "description": "Syntax highlighting and hover docs plugin for SecLang, the language used by ModSecurity and Coraza",
   "repository": {
     "type": "git",
     "url": "https://github.com/louis-lau/vscode-secrule-language-plugin.git"
@@ -10,7 +10,7 @@
   "keywords": [
     "modsecurity",
     "coraza",
-    "secrules",
+    "seclang",
     "syntax",
     "highlighting",
     "hover",
@@ -27,40 +27,41 @@
   ],
   "main": "./out/extension.js",
   "activationEvents": [
-    "onLanguage:secrules"
+    "onLanguage:seclang"
   ],
   "contributes": {
     "languages": [
       {
-        "id": "secrules",
+        "id": "seclang",
         "aliases": [
+          "SecLang",
+          "seclang",
           "SecRules",
           "secrules"
         ],
         "extensions": [
-          ".secrules",
           ".conf"
         ],
-        "configuration": "./languages/secrules.configuration.json"
+        "configuration": "./languages/seclang.configuration.json"
       }
     ],
     "grammars": [
       {
-        "language": "secrules",
-        "scopeName": "source.secrules",
-        "path": "./syntaxes/secrules.tmLanguage.json"
+        "language": "seclang",
+        "scopeName": "source.seclang",
+        "path": "./syntaxes/seclang.tmLanguage.json"
       }
     ]
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
-    "clean": "rm -rf out syntaxes/secrules.tmLanguage.json",
+    "clean": "rm -rf out syntaxes/seclang.tmLanguage.json",
     "compile": "npm run clean && npm run convert-grammar && npm run generate-docs && tsc -p ./",
     "generate-docs": "node scripts/generate-docs.js",
-    "convert-grammar": "npx js-yaml syntaxes/secrules.tmLanguage.yml > syntaxes/secrules.tmLanguage.json",
+    "convert-grammar": "npx js-yaml syntaxes/seclang.tmLanguage.yml > syntaxes/seclang.tmLanguage.json",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile",
-    "test": "npx vscode-tmgrammar-test -c -g syntaxes/secrules.tmLanguage.json 'tests/unit/**/*.test.secrules'"
+    "test": "npx vscode-tmgrammar-test -c -g syntaxes/seclang.tmLanguage.json 'tests/unit/**/*.test.conf'"
   },
   "dependencies": {},
   "devDependencies": {
